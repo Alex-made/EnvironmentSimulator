@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuqlidFunctionOptimization", "EuqlidFunctionOptimization\EuqlidFunctionOptimization.csproj", "{6F0CB973-78C6-43FB-89F7-101B2C5AA273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuqlidFunctionOptimization", "EuqlidFunctionOptimization\EuqlidFunctionOptimization.csproj", "{6F0CB973-78C6-43FB-89F7-101B2C5AA273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureOptimization", "InfrastructureOptimization\InfrastructureOptimization.csproj", "{14411ADA-725F-41AF-AE13-E3D4072842A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6F0CB973-78C6-43FB-89F7-101B2C5AA273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F0CB973-78C6-43FB-89F7-101B2C5AA273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F0CB973-78C6-43FB-89F7-101B2C5AA273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14411ADA-725F-41AF-AE13-E3D4072842A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14411ADA-725F-41AF-AE13-E3D4072842A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14411ADA-725F-41AF-AE13-E3D4072842A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14411ADA-725F-41AF-AE13-E3D4072842A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
