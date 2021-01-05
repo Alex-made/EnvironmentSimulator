@@ -41,8 +41,7 @@ namespace InfrastructureOptimization
 			//отладка
 			for(var i=0;i<30;i++)
 			{
-				GetData(out var s1, out var s2);
-				var myChromosome = new MyChromosome(s1, s2);
+				var myChromosome = new MyChromosome(servers, services);
 				Console.Write(fitness.Evaluate(myChromosome) + " ");
 				foreach (var gene in myChromosome.GetGenes())
 				{
@@ -59,7 +58,7 @@ namespace InfrastructureOptimization
 
 		private static void GetData(out ISet<Server> servers, out ISet<Service> services)
 		{
-			services = new HashSet<Service>()
+			services = new HashSet<Service> ()
 			{
 				new Service("Service_1", OsType.Windows, 5, 1),
 				new Service("Service_2", OsType.Windows, 12, 2),

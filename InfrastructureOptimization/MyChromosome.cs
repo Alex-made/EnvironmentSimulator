@@ -6,6 +6,7 @@ using System.Text;
 using DatacenterEnvironmentSimulator.Models;
 using GeneticSharp.Domain.Chromosomes;
 using InfrastructureOptimization.Domain;
+using InfrastructureOptimization.Extensions;
 
 namespace EuqlidFunctionOptimization
 {
@@ -23,12 +24,16 @@ namespace EuqlidFunctionOptimization
 			{
 				throw new ArgumentException(nameof(servers));
 			}
-			_servers = servers;
+
+			//в _servers нужна копия servers
+			_servers = servers.CloneSet();
+
 			if (!services.Any())
 			{
 				throw new ArgumentException(nameof(services));
 			}
-			_services = services;
+
+			_services = services.CloneSet();
 
 			//создать рандомную хромосому - список серверов с коллекциями сервисов на них
 			//распределяем _services на servers по типу ОС
@@ -45,6 +50,7 @@ namespace EuqlidFunctionOptimization
 			foreach (var osType in osTypes)
 			{
 				var services = _services.Where(x => x.Os == osType);
+
 				IList<Server> servers = _servers.Where(server => server.Os == osType).ToList();
 				foreach (var service in services)
 				{
@@ -62,7 +68,7 @@ namespace EuqlidFunctionOptimization
 		public override IChromosome CreateNew()
 		{
 			//создает на основе данных из конструктора хромосому
-			return new MyChromosome(_servers, _services);
+			return new MyChromosome(_servers.ToHashSet(), _services.ToHashSet());
 		}
 	}
 }

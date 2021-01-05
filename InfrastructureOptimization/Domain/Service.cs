@@ -19,5 +19,10 @@ namespace DatacenterEnvironmentSimulator.Models
 		public OsType Os { get; set; }
 		public float Hdd { get; set; }
 		public float Ram { get; set; }
+
+		public Service Clone()
+		{
+			return new Service(Name, Os, Hdd, Ram);
+		}
 	}
 }

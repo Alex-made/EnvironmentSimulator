@@ -47,5 +47,17 @@ namespace DatacenterEnvironmentSimulator.Models
 			_ramFree -= service.Ram;
 			_services.Add(service);
 		}
+
+		public Server Clone()
+		{
+			var cloneServer = new Server(Name, Os, HddFull, RamFull);
+
+			foreach (var service in _services)
+			{
+				cloneServer.AddService(service.Clone());
+			}
+
+			return cloneServer;
+		}
 	}
 }
