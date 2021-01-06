@@ -7,24 +7,24 @@ namespace InfrastructureOptimization.Extensions
 {
 	public static class InfrastructureOptimizationExtensions
 	{
-		public static ISet<Server> CloneSet(this ISet<Server> setToClone)
+		public static IList<Server> CloneList(this IList<Server> listToClone)
 		{
-			var newSet = new HashSet<Server>();
-			foreach (var element in setToClone)
+			var newList = new List<Server>();
+			foreach (var element in listToClone)
 			{
-				newSet.Add(element.Clone());
+				newList.Add(element.Clone());
 			}
-			return newSet;
+			return newList;
 		}
 
-		public static ISet<Service> CloneSet(this ISet<Service> setToClone)
+		public static IList<Service> CloneList(this IList<Service> listToClone)
 		{
-			var newSet = new HashSet<Service>();
-			foreach (var element in setToClone)
+			var newList = new List<Service>();
+			foreach (var element in listToClone)
 			{
-				newSet.Add(element.Clone());
+				newList.Add(element.Clone());
 			}
-			return newSet;
+			return newList;
 		}
 	}
 }

@@ -8,14 +8,15 @@ using GeneticSharp.Domain.Chromosomes;
 using InfrastructureOptimization.Domain;
 using InfrastructureOptimization.Extensions;
 
-namespace EuqlidFunctionOptimization
+namespace InfrastructureOptimization
 {
 	public class MyChromosome : ChromosomeBase
 	{
-		private ISet<Server> _servers;
-		private ISet<Service> _services;
+		private readonly IList<Server> _servers;
+		private readonly IList<Service> _services;
+		private readonly IList<Server> _distributedServers;
 
-		public MyChromosome(ISet<Server> servers, ISet<Service> services) : base(servers.Count)
+		public MyChromosome(IList<Server> servers, IList<Service> services) : base(servers.Count)
 		{
 			//длина хромосомы - количество генов, т.е. серверов в коллекции.
 			//принимает среду, т.е. то, что возвращает нам симулятор
@@ -25,50 +26,52 @@ namespace EuqlidFunctionOptimization
 				throw new ArgumentException(nameof(servers));
 			}
 
-			//в _servers нужна копия servers
-			_servers = servers.CloneSet();
-
+			_servers = servers;
+			
 			if (!services.Any())
 			{
 				throw new ArgumentException(nameof(services));
 			}
 
-			_services = services.CloneSet();
+			_services = services;
 
 			//создать рандомную хромосому - список серверов с коллекциями сервисов на них
 			//распределяем _services на servers по типу ОС
-			DistributeServices();
+			_distributedServers = DistributeServices(_servers.CloneList(), _services.CloneList());
 
 			CreateGenes();
 		}
 
-		private void DistributeServices()
+		private IList<Server> DistributeServices(IList<Server> serversClone, IList<Service> servicesClone)
 		{
 			var rand = new Random();
-			var osTypes = _services.Select(x => x.Os).Distinct();
+			var osTypes = servicesClone.Select(x => x.Os).Distinct();
 			
 			foreach (var osType in osTypes)
 			{
-				var services = _services.Where(x => x.Os == osType);
+				var services = servicesClone.Where(x => x.Os == osType);
 
-				IList<Server> servers = _servers.Where(server => server.Os == osType).ToList();
+				IList<Server> servers = serversClone.Where(server => server.Os == osType).ToList();
 				foreach (var service in services)
 				{
 					servers[rand.Next(servers.Count)].AddService(service);
 				}
 			}
+
+			return serversClone;
 		}
 
 		public override Gene GenerateGene(int geneIndex)
 		{
 			//создает ген из одного сервера
-			return new Gene(_servers.ElementAt(geneIndex));
+			return new Gene(_distributedServers.ElementAt(geneIndex));
 		}
 
 		public override IChromosome CreateNew()
 		{
 			//создает на основе данных из конструктора хромосому
-			return new MyChromosome(_servers.ToHashSet(), _services.ToHashSet());
+			return new MyChromosome(_servers, _services);
 		}
+
 	}
 }

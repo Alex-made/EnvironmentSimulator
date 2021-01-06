@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using DatacenterEnvironmentSimulator.Models;
-using EuqlidFunctionOptimization;
+using InfrastructureOptimization;
+using GeneticSharp.Domain.Chromosomes;
+using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Fitnesses;
 using GeneticSharp.Domain.Populations;
+using GeneticSharp.Domain.Selections;
 using InfrastructureOptimization.Domain;
 
 namespace InfrastructureOptimization
@@ -38,8 +41,14 @@ namespace InfrastructureOptimization
 				return fitness;
 			});
 
+			var selection = new EliteSelection();
+			//сделал свой кроссовер, похожий на UniformCrossover
+			var crossover = new MyCrossover();
+			crossover.Cross(new List<IChromosome> {chromosome.CreateNew(), chromosome.CreateNew()});
+
+
 			//отладка
-			for(var i=0;i<30;i++)
+			for (var i=0;i<30;i++)
 			{
 				var myChromosome = new MyChromosome(servers, services);
 				Console.Write(fitness.Evaluate(myChromosome) + " ");
@@ -56,9 +65,9 @@ namespace InfrastructureOptimization
 			}
 		}
 
-		private static void GetData(out ISet<Server> servers, out ISet<Service> services)
+		private static void GetData(out IList<Server> servers, out IList<Service> services)
 		{
-			services = new HashSet<Service> ()
+			services = new List<Service> ()
 			{
 				new Service("Service_1", OsType.Windows, 5, 1),
 				new Service("Service_2", OsType.Windows, 12, 2),
@@ -67,7 +76,7 @@ namespace InfrastructureOptimization
 				new Service("Service_Linux", OsType.Linux, 8, 2)
 			};
 
-			servers = new HashSet<Server>()
+			servers = new List<Server>()
 			{
 				new Server ("Server_1", OsType.Windows, 20, 10),
 				new Server ("Server_2", OsType.Windows, 9, 10),
