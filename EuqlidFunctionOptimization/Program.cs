@@ -35,7 +35,7 @@ namespace InfrastructureOptimization
 
                 return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
             });
-            //TODO посмотреть, скольок хромосом из общего числа выбрано
+            //TODO посмотреть, сколькл хромосом из общего числа выбрано
             var selection = new EliteSelection();
             var crossover = new UniformCrossover(0.5f);
             var mutation = new FlipBitMutation();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InfrastructureOptimization.Domain;
 
-namespace DatacenterEnvironmentSimulator.Models
+namespace InfrastructureOptimization.Domain
 {
 	public class Service
 	{

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using InfrastructureOptimization.Domain;
 
-namespace DatacenterEnvironmentSimulator.Models
+namespace InfrastructureOptimization.Domain
 {
 	public class Server
 	{
@@ -40,8 +38,17 @@ namespace DatacenterEnvironmentSimulator.Models
 			get => new ReadOnlyCollection<Service>(_services);
 		}
 
+		public void DeleteService(int serviceIndex)
+		{
+			_services.RemoveAt(serviceIndex);
+		}
+
 		public void AddService(Service service)
 		{
+			if (_services.Any(x => x.Id == service.Id))
+			{
+				throw new ArgumentException(nameof(service));
+			}
 			IsFree = false;
 			_hddFree -= service.Hdd;
 			_ramFree -= service.Ram;

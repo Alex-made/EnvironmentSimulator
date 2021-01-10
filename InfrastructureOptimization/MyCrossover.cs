@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using DatacenterEnvironmentSimulator.Models;
 using InfrastructureOptimization;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
+using InfrastructureOptimization.Domain;
 using InfrastructureOptimization.Extensions;
 
 namespace InfrastructureOptimization
@@ -24,8 +23,8 @@ namespace InfrastructureOptimization
 			var emptyServers = GetEmptyServers(firstParent); //получили коллекцию серверов без сервисов
 
 			//создали детей с серверами без сервисов
-			var firstChild = new MyChromosome(emptyServers);
-			var secondChild = new MyChromosome(emptyServers);
+			var firstChild = firstParent.CreateNew();
+			var secondChild = secondParent.CreateNew();
 
 			var services = GetServicesPlainList(firstParent); //получили плоский список сервисов, чтобы их раскидать по детям
 			

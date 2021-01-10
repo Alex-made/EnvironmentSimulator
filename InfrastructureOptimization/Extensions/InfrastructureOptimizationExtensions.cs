@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using DatacenterEnvironmentSimulator.Models;
+using InfrastructureOptimization.Domain;
 
 namespace InfrastructureOptimization.Extensions
 {

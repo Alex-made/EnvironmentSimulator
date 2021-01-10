@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DatacenterEnvironmentSimulator.Models;
-using InfrastructureOptimization;
+using GeneticSharp.Domain;
 using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Fitnesses;
 using GeneticSharp.Domain.Populations;
 using GeneticSharp.Domain.Selections;
+using GeneticSharp.Domain.Terminations;
 using InfrastructureOptimization.Domain;
 
 namespace InfrastructureOptimization
@@ -44,20 +43,40 @@ namespace InfrastructureOptimization
 			var selection = new EliteSelection();
 			//сделал свой кроссовер, похожий на UniformCrossover
 			var crossover = new MyCrossover();
-			crossover.Cross(new List<IChromosome> {chromosome.CreateNew(), chromosome.CreateNew()});
+			//строка для отладки кроссовера
+			//crossover.Cross(new List<IChromosome> {chromosome.CreateNew(), chromosome.CreateNew()});
 
+			var mutation = new MyMutation();
+			//mutation.Mutate(chromosome, Single.Epsilon);
+
+			var termination = new FitnessStagnationTermination(100);
+
+			var ga = new GeneticAlgorithm(
+				population,
+				fitness,
+				selection,
+				crossover,
+				mutation);
+
+			ga.Termination = termination;
+
+			ga.Start();
 
 			//отладка
-			for (var i=0;i<30;i++)
+			//Debug();
+		}
+
+		private void Debug(IChromosome chromosome, IFitness fitness)
+		{
+			for (var i = 0; i < 30; i++)
 			{
-				var myChromosome = new MyChromosome(servers, services);
-				Console.Write(fitness.Evaluate(myChromosome) + " ");
-				foreach (var gene in myChromosome.GetGenes())
+				Console.Write(fitness.Evaluate(chromosome) + " ");
+				foreach (var gene in chromosome.GetGenes())
 				{
-					var server = (Server) gene.Value;
+					var server = (Server)gene.Value;
 					var serviceNames = server.Services.Select(x => x.Name.ToString()).ToList();
 					Console.Write("Сервер - " + server.Name + ":{ ");
-					serviceNames.ForEach(x=>Console.Write(x + ";"));
+					serviceNames.ForEach(x => Console.Write(x + ";"));
 					Console.Write("} ");
 				}
 				Console.WriteLine();
