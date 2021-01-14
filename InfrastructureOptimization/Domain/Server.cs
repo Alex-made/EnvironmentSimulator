@@ -40,6 +40,13 @@ namespace InfrastructureOptimization.Domain
 
 		public void DeleteService(int serviceIndex)
 		{
+			var service = _services[serviceIndex];
+			_hddFree += service.Hdd;
+			_ramFree += service.Ram;
+			if ((_hddFree == HddFull) && (_ramFree == RamFull))
+			{
+				IsFree = true;
+			}
 			_services.RemoveAt(serviceIndex);
 		}
 

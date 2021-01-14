@@ -22,14 +22,14 @@ namespace InfrastructureOptimization
 			var donorServer = GetRandomServer(servers, server => server.Services.Any()); //дай мне любой сервер c хотя бы одним сервисом
 			var service = GetRandomService(donorServer);
 				
-			var recipientServer = GetRandomServer(servers, s=>s.Os == donorServer.Os); //дай мне любой сервер с ОС, как на donorServer
+			var recipientServer = GetRandomServer(servers, s=>s.Os == donorServer.Os && s.Name != donorServer.Name); //дай мне любой сервер с ОС, как на donorServer
 			recipientServer.AddService(service);
 		}
 
-		//TODO узнать, включены ли концы (ограничения) при возврате GetInt
 		private Server GetRandomServer(IList<Server> servers, Func<Server, bool> predicate)
 		{
 			var s = servers.Where(predicate).ToList();
+			var a = RandomizationProvider.Current.GetInt(0, s.Count() - 1);
 			return s[RandomizationProvider.Current.GetInt(0, s.Count()-1)];
 		}
 
