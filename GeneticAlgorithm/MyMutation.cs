@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Randomizations;
-using InfrastructureOptimization.Domain;
+using GeneticAlgorithm.Domain;
 
-namespace InfrastructureOptimization
+namespace GeneticAlgorithm
 {
 	public class MyMutation : MutationBase
 	{

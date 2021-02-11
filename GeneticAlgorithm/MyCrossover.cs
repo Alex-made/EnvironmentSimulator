@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfrastructureOptimization;
+using GeneticAlgorithm.Domain;
+using GeneticAlgorithm.Extensions;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
-using InfrastructureOptimization.Domain;
-using InfrastructureOptimization.Extensions;
 
-namespace InfrastructureOptimization
+namespace GeneticAlgorithm
 {
 	public class MyCrossover : CrossoverBase
 	{

@@ -8,7 +8,7 @@ using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Terminations;
 using System;
 
-namespace InfrastructureOptimization
+namespace EuqlidFunctionOptimization
 {
     class Program
     {

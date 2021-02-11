@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InfrastructureOptimization.Domain;
 
-namespace InfrastructureOptimization.Domain
+namespace GeneticAlgorithm.Domain
 {
 	public class Service
 	{

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeneticAlgorithm.Domain;
+using GeneticAlgorithm.Extensions;
 using GeneticSharp.Domain.Chromosomes;
-using InfrastructureOptimization.Domain;
-using InfrastructureOptimization.Extensions;
 
-namespace InfrastructureOptimization
+namespace GeneticAlgorithm
 {
 	public class MyChromosome : ChromosomeBase
 	{
