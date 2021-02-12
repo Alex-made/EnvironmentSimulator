@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeneticAlgorithm.Domain;
-using GeneticAlgorithm.Extensions;
+using Common.Domain;
+using Common.Extensions;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
 

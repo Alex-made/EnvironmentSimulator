@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace SimulatedAnnealing.Domain
+namespace Common.Domain
 {
 	public class Server
 	{

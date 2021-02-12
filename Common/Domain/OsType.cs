@@ -1,4 +1,4 @@
-﻿namespace SimulatedAnnealing.Domain
+﻿namespace Common.Domain
 {
 	public enum OsType
 	{

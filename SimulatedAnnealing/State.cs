@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimulatedAnnealing.Extensions;
-using SimulatedAnnealing.Domain;
+using Common.Extensions;
+using Common.Domain;
 using System.IO;
 
 namespace SimulatedAnnealing

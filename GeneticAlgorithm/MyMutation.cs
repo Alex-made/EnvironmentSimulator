@@ -5,7 +5,7 @@ using System.Linq;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Randomizations;
-using GeneticAlgorithm.Domain;
+using Common.Domain;
 
 namespace GeneticAlgorithm
 {

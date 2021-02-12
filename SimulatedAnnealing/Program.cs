@@ -1,9 +1,10 @@
-﻿using SimulatedAnnealing.Domain;
+﻿using Common;
+using Common.Domain;
+using Common.TestData;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace SimulatedAnnealing
 {
@@ -42,10 +43,12 @@ namespace SimulatedAnnealing
 
 			//сам алгоритм
 			//Задаём произвольное первое состояние нашей инфраструктуры state1
-			GetData(out var servers, out var services);
-			var result = PerformAnnealing(tInitial, tMin, optimizationFunction,
-				decreaseTemperatureFunction, servers, services);			
+			TestData.GetData(out var servers, out var services);
+			PerformAnnealing(tInitial, tMin, optimizationFunction,
+				decreaseTemperatureFunction, servers, services);
 		}
+
+		
 
 		/// <summary>
 		/// Выводит в консоль результаты алгоритма на каждом шаге
@@ -53,9 +56,10 @@ namespace SimulatedAnnealing
 		/// <param name="state">Состояние решения.</param>
 		/// <param name="e">Значение функции оптимизации.</param>
 		/// <param name="elapsedTime">Время работы алгоритма.</param>
-		private static void Debug(State state, double e, TimeSpan elapsedTime)
+		private static void ShowResult(State state, IList<Service> services, double e, TimeSpan elapsedTime)
 		{
 			Console.WriteLine(elapsedTime.TotalSeconds + " c");
+			Console.WriteLine("Заполненность: " + Filling.Calculate(state.Servers, services));
 			Console.WriteLine("Значение функции оптимизации:" + e);
 			foreach(var server in state.Servers)
 			{
@@ -65,6 +69,8 @@ namespace SimulatedAnnealing
 									  ", HddFree: " + server.HddFree +
 									  ", RamFree: " + server.RamFree +
 									  ", сервисы: ");
+				Console.Write(" Заполненность Hdd: " + Math.Round(100 - (server.HddFree / server.HddFull * 100)) + "%");
+				Console.Write(" Заполненность Ram: " + Math.Round(100 - (server.RamFree / server.RamFull * 100)) + "%");
 				foreach (var service in server.Services)
 				{
 					Console.Write(service.Name + ", ");
@@ -74,7 +80,7 @@ namespace SimulatedAnnealing
 			}
 		}
 
-		private static State PerformAnnealing(double tInitial, 
+		private static void PerformAnnealing(double tInitial, 
 			double tMin, 
 			OptimizationFunction optimizationFunction,
 			DecreaseTemperatureFunction decreaseTemperatureFunction,
@@ -115,74 +121,7 @@ namespace SimulatedAnnealing
 				iterationNumber++;
 			}
 			stopwatch.Stop();
-			Debug(currentState, optimizationFunction.Evaluate(currentState),stopwatch.Elapsed);
-			return currentState;
-		}
-
-		private static void GetData(out IList<Server> servers, out IList<Service> services)
-		{
-			services = new List<Service>()
-			{
-				new Service("Service_1", OsType.Windows, 5, 1),
-				new Service("Service_2", OsType.Windows, 12, 2),
-				new Service("Service_3", OsType.Windows, 3, 1),
-				new Service("Service_4", OsType.Windows, 7, 2),
-				new Service("Service_Linux_1", OsType.Linux, 8, 2),
-				new Service("Service_5", OsType.Windows, 2, 1),
-				new Service("Service_6", OsType.Windows, 10, 2),
-				new Service("Service_7", OsType.Windows, 13, 3),
-				new Service("Service_8", OsType.Windows, 4, 2),
-				new Service("Service_Linux_2", OsType.Linux, 2, 3),
-				new Service("Service_9", OsType.Windows, 5, 1),
-				new Service("Service_10", OsType.Windows, 12, 2),
-				new Service("Service_11", OsType.Windows, 3, 1.5f),
-				new Service("Service_12", OsType.Windows, 8.5f, 2),
-				new Service("Service_Linux_3", OsType.Linux, 11, 2),
-				new Service("Service_13", OsType.Windows, 4, 1),
-				new Service("Service_14", OsType.Windows, 12, 2),
-				new Service("Service_15", OsType.Windows, 8, 1.5f),
-				new Service("Service_16", OsType.Windows, 6.3f, 2),
-				new Service("Service_Linux_4", OsType.Linux, 1, 2),
-				new Service("Service_17", OsType.Windows, 1, 0.5f),
-				new Service("Service_18", OsType.Windows, 0.5f, 0.2f),
-				new Service("Service_19", OsType.Windows, 1, 0.2f),
-				new Service("Service_20", OsType.Windows, 0.3f, 0.12f),
-				new Service("Service_Linux_5", OsType.Linux, 0.1f, 0.1f),
-				new Service("Service_1", OsType.Windows, 5, 1),
-				new Service("Service_2", OsType.Windows, 12, 2),
-				new Service("Service_3", OsType.Windows, 3, 1),
-				new Service("Service_4", OsType.Windows, 7, 2),
-				new Service("Service_Linux_1", OsType.Linux, 8, 2),
-				new Service("Service_5", OsType.Windows, 2, 1),
-				new Service("Service_6", OsType.Windows, 10, 2),
-				new Service("Service_7", OsType.Windows, 13, 3),
-				new Service("Service_8", OsType.Windows, 4, 2),
-				new Service("Service_Linux_2", OsType.Linux, 2, 3),
-				new Service("Service_9", OsType.Windows, 5, 1),
-				new Service("Service_10", OsType.Windows, 12, 2),
-				new Service("Service_11", OsType.Windows, 3, 1.5f),
-				new Service("Service_12", OsType.Windows, 8.5f, 2),
-				new Service("Service_Linux_3", OsType.Linux, 11, 2),
-				new Service("Service_13", OsType.Windows, 4, 1),
-				new Service("Service_14", OsType.Windows, 12, 2),
-				new Service("Service_15", OsType.Windows, 8, 1.5f),
-				new Service("Service_16", OsType.Windows, 6.3f, 2),
-				new Service("Service_Linux_4", OsType.Linux, 1, 2),
-				new Service("Service_17", OsType.Windows, 1, 0.5f),
-				new Service("Service_18", OsType.Windows, 0.5f, 0.2f),
-				new Service("Service_19", OsType.Windows, 1, 0.2f),
-				new Service("Service_20", OsType.Windows, 0.3f, 0.12f),
-				new Service("Service_Linux_5", OsType.Linux, 0.1f, 0.1f)
-			};
-
-			servers = new List<Server>()
-			{
-				new Server ("Server_1", OsType.Windows, 142, 34),
-				new Server ("Server_2", OsType.Windows, 54, 22),
-				new Server ("Server_3", OsType.Windows, 66, 20),
-				new Server ("Server_Linux_1", OsType.Linux, 36, 20),
-				new Server ("Server_Linux_2", OsType.Linux, 36, 20)
-			};
+			ShowResult(currentState, services, optimizationFunction.Evaluate(currentState),stopwatch.Elapsed);
 		}
 	}
 }

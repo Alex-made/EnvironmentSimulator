@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneticAlgorithm", "Genetic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BFD", "BFD\BFD.csproj", "{F322D761-7F41-47FD-88CB-167754F69A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulatedAnnealing", "SimulatedAnnealing\SimulatedAnnealing.csproj", "{9C25B976-2087-4135-974B-2E277FCD218B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimulatedAnnealing", "SimulatedAnnealing\SimulatedAnnealing.csproj", "{9C25B976-2087-4135-974B-2E277FCD218B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9DD519D8-2126-4782-BF41-2705102619DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9C25B976-2087-4135-974B-2E277FCD218B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C25B976-2087-4135-974B-2E277FCD218B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C25B976-2087-4135-974B-2E277FCD218B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD519D8-2126-4782-BF41-2705102619DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD519D8-2126-4782-BF41-2705102619DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD519D8-2126-4782-BF41-2705102619DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD519D8-2126-4782-BF41-2705102619DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

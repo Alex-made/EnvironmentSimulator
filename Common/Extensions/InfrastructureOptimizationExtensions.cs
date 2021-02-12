@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithm.Domain;
+﻿using Common.Domain;
 using System.Collections.Generic;
 
-namespace GeneticAlgorithm.Extensions
+namespace Common.Extensions
 {
 	public static class InfrastructureOptimizationExtensions
 	{

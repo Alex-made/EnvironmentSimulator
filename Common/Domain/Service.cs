@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GeneticAlgorithm.Domain
+namespace Common.Domain
 {
 	public class Service
 	{
