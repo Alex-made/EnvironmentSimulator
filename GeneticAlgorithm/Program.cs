@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.Domain;
 using Common.TestData;
@@ -18,7 +19,7 @@ namespace GeneticAlgorithm
 
 			var chromosome = new MyChromosome(servers, services);
 
-			var populationSize = 11;
+			var populationSize = 9;
 			var population = new Population(populationSize, populationSize, chromosome);
 
 			var fitness = new FuncFitness((c) =>
@@ -38,11 +39,25 @@ namespace GeneticAlgorithm
 
 				var fitness = freeServersTerm + negativeHddFreeTerm + positiveHddFreeTerm + negativeRamFreeTerm +
 				              positiveRamFreeTerm + negativeCpuFreeTerm + positiveCpuFreeTerm;
-				
-				return fitness;
 
 				//по каждому серверу нужно вычислить коэффициент заполненности
-				
+				var serversFill = new List<double>();
+				foreach (var server in servers)
+				{
+					var serverFill = ((server.HddFull-server.HddFree) / server.HddFull) * 0.2 +
+					((server.RamFull-server.RamFree) / server.RamFull) * 0.4 +
+					((server.CpuFull-server.CpuFree) / server.CpuFull) * 0.4;
+					serversFill.Add(serverFill);
+				}
+				serversFill = serversFill.OrderByDescending(x=>x).ToList();
+				//отладочная строка
+				//var serversFill = new List<double> { 0.9d, 0.9d, 0.6d, 0.2d,0 };
+				//среднее значение заполненности серверов
+				var averageFill = serversFill.Sum() / servers.Count();
+				//рассчитаем дисперсию у serversFill
+				var dispersion = serversFill.Select(eachFill => (eachFill - averageFill) * (eachFill - averageFill)).Sum()/servers.Count;
+
+				return (dispersion*3) + fitness;
 			});
 
 			var selection = new EliteSelection();
@@ -61,10 +76,11 @@ namespace GeneticAlgorithm
 				fitness,
 				selection,
 				crossover,
-				mutation);
-
-			ga.Termination = termination;
-			ga.MutationProbability = 0.4f;
+				mutation)
+			{
+				Termination = termination,
+				MutationProbability = 0.3f
+			};
 
 			var latestFitness = 0.0;
 			ga.GenerationRan += (sender, e) =>
