@@ -10,6 +10,7 @@ namespace Common.Domain
 		private IList<Service> _services = new List<Service>();
 		private float _hddFree;
 		private float _ramFree;
+		private float _cpuFree;
 
 		public Server(string name, OsType osType, float hddFull, float ramFull)
 		{
@@ -20,6 +21,7 @@ namespace Common.Domain
 
 			_hddFree = HddFull;
 			_ramFree = RamFull;
+			_cpuFree = 100;
 			IsFree = true;
 		}
 
@@ -27,11 +29,11 @@ namespace Common.Domain
 		public string Name { get; set; }
 		public OsType Os { get; set; }
 		public float HddFull { get; set; }
-
 		public float HddFree => _hddFree;
-
 		public float RamFull { get; set; }
 		public float RamFree => _ramFree;
+		public float CpuFull => 100;
+		public float CpuFree => _cpuFree;
 
 		public IReadOnlyCollection<Service> Services
 		{
@@ -43,7 +45,8 @@ namespace Common.Domain
 			var service = _services[serviceIndex];
 			_hddFree += service.Hdd;
 			_ramFree += service.Ram;
-			if ((_hddFree == HddFull) && (_ramFree == RamFull))
+			_cpuFree += service.Cpu;
+			if ((_hddFree == HddFull) && (_ramFree == RamFull) && (_cpuFree == CpuFull))
 			{
 				IsFree = true;
 			}
@@ -59,6 +62,7 @@ namespace Common.Domain
 			IsFree = false;
 			_hddFree -= service.Hdd;
 			_ramFree -= service.Ram;
+			_cpuFree -= service.Cpu;
 			_services.Add(service);
 		}
 

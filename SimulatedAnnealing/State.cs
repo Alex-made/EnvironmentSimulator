@@ -82,8 +82,11 @@ namespace SimulatedAnnealing
 			return removedService;
 		}
 
-		//создать рандомную хромосому - список серверов с коллекциями сервисов на них
-		//распределяем _services на servers по типу ОС
+		/// <summary>
+		/// Инициализирует начальное состояние - список серверов с рандомно 
+		/// распределенными коллекциями сервисов на них. 
+		/// Распределяет _services на servers по типу ОС.
+		/// </summary>
 		public void Initialize()
 		{
 			var rand = new Random();

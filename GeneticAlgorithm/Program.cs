@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Common;
 using Common.Domain;
 using Common.TestData;
 using GeneticSharp.Domain.Chromosomes;
@@ -34,11 +33,16 @@ namespace GeneticAlgorithm
 				var positiveHddFreeTerm = servers.Where(x => x.HddFree > 0).Select(x => x.HddFree * 0.2).Sum();
 				var negativeRamFreeTerm = servers.Where(x => x.RamFree < 0).Select(x => x.RamFree * 3).Sum();
 				var positiveRamFreeTerm = servers.Where(x => x.RamFree > 0).Select(x => x.RamFree * 0.2).Sum();
+				var negativeCpuFreeTerm = servers.Where(x => x.CpuFree < 0).Select(x => x.CpuFree * 3).Sum();
+				var positiveCpuFreeTerm = servers.Where(x => x.CpuFree > 0).Select(x => x.CpuFree * 0.2).Sum();
 
 				var fitness = freeServersTerm + negativeHddFreeTerm + positiveHddFreeTerm + negativeRamFreeTerm +
-				              positiveRamFreeTerm;
+				              positiveRamFreeTerm + negativeCpuFreeTerm + positiveCpuFreeTerm;
 				
 				return fitness;
+
+				//по каждому серверу нужно вычислить коэффициент заполненности
+				
 			});
 
 			var selection = new EliteSelection();
@@ -79,7 +83,6 @@ namespace GeneticAlgorithm
 						.Select(x => (Server)x.Value).ToList();
 
 					Console.Write("Фитнес: " + bestFitness);
-					Console.WriteLine("Заполненность: " + Filling.Calculate(phenotype, services));
 					Console.WriteLine();
 
 					foreach (var server in phenotype)
@@ -89,9 +92,11 @@ namespace GeneticAlgorithm
 									  ", RamFull: " + server.RamFull +
 									  ", HddFree: " + server.HddFree +
 									  ", RamFree: " + server.RamFree +
-						              ", сервисы: ");
+									  ", CpuFree: " + server.CpuFree +
+									  ", сервисы: ");
 						Console.Write(" Заполненность Hdd: " + Math.Round(100 - (server.HddFree/ server.HddFull * 100)) + "%");
 						Console.Write(" Заполненность Ram: " + Math.Round(100 - (server.RamFree/ server.RamFull * 100)) + "%");
+						Console.Write(" Заполненность Cpu: " + Math.Round(100 - server.CpuFree) + "%");
 						foreach (var service in server.Services)
 						{
 							Console.Write(service.Name + ", ");
